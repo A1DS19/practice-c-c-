@@ -52,7 +52,7 @@ auto main() -> int {
 
     ImVec4 clear_color = ImVec4(0.000f, 0.169f, 0.212f, 1.00f); // Solarized Dark base03 #002b36
 
-    auto file_explorer = UI::Window("File Explorer");
+    auto file_explorer = FileExplorer::Window("File Explorer");
 
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();

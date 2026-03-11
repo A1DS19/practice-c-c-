@@ -3,7 +3,7 @@
 #include <filesystem>
 #include <string_view>
 
-namespace UI {
+namespace FileExplorer {
 namespace fs = std::filesystem;
 class Window {
 public:
@@ -30,4 +30,4 @@ private:
     bool delete_file(const fs::path& path);
 };
 
-} // namespace UI
+} // namespace FileExplorer

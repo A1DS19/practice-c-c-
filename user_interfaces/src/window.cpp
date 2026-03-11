@@ -12,7 +12,7 @@
 #include <iostream>
 #include <string_view>
 
-using namespace UI;
+using namespace FileExplorer;
 
 void Window::draw() {
     constexpr static auto WINDOW_FLAGS = ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
@@ -28,6 +28,7 @@ void Window::draw() {
     Window::draw_menu();
     ImGui::Separator();
     Window::draw_content();
+    ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 100);
     ImGui::Separator();
     Window::draw_actions();
     ImGui::Separator();
@@ -82,6 +83,7 @@ void Window::draw_actions() {
         if (ImGui::Button("Open file")) {
             open_file_default_editor();
         }
+        ImGui::SameLine();
     }
 
     if (ImGui::Button("Rename")) {
