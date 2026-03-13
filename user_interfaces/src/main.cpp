@@ -1,13 +1,14 @@
 #include "main.hpp"
 
+#include "diff_viewer.hpp"
 #include "file_explorer.hpp"
 #include "function_plotter.hpp"
 #include "text_editor.hpp"
 
 #ifdef __APPLE__
-#include <OpenGL/gl.h>
+    #include <OpenGL/gl.h>
 #else
-#include <GL/gl.h>
+    #include <GL/gl.h>
 #endif
 #include <GLFW/glfw3.h>
 #include <cstdlib>
@@ -70,6 +71,7 @@ auto main() -> int {
     auto file_explorer = FileExplorer::Window("File Explorer");
     auto function_plotter = FunctionPlotter::Window();
     auto text_editor = TextEditor::Window();
+    auto diff_viewer = DiffViewer::Window();
 
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
@@ -84,7 +86,7 @@ auto main() -> int {
 
         // file_explorer.draw();
         // function_plotter.draw();
-        text_editor.draw();
+        diff_viewer.draw();
 
         ImGui::Render();
         int display_w;
