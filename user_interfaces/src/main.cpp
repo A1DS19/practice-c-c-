@@ -1,6 +1,7 @@
 #include "main.hpp"
 
-#include "window.hpp"
+#include "file_explorer.hpp"
+#include "function_plotter.hpp"
 
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
@@ -8,6 +9,7 @@
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
+#include <implot.h>
 
 auto main() -> int {
 
@@ -34,6 +36,7 @@ auto main() -> int {
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
+    ImPlot::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
     // Suppress unused variable
     (void)io;
@@ -53,6 +56,7 @@ auto main() -> int {
     ImVec4 clear_color = ImVec4(0.000f, 0.169f, 0.212f, 1.00f); // Solarized Dark base03 #002b36
 
     auto file_explorer = FileExplorer::Window("File Explorer");
+    auto function_plotter = FunctionPlotter::Window();
 
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
@@ -65,7 +69,8 @@ auto main() -> int {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        file_explorer.draw();
+        // file_explorer.draw();
+        function_plotter.draw();
 
         ImGui::Render();
         int display_w;
@@ -81,6 +86,7 @@ auto main() -> int {
 
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
+    ImPlot::DestroyContext();
     ImGui::DestroyContext();
     glfwDestroyWindow(window);
     glfwTerminate();
