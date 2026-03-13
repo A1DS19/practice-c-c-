@@ -2,6 +2,7 @@
 
 #include "file_explorer.hpp"
 #include "function_plotter.hpp"
+#include "text_editor.hpp"
 
 #include <GL/gl.h>
 #include <GLFW/glfw3.h>
@@ -57,6 +58,7 @@ auto main() -> int {
 
     auto file_explorer = FileExplorer::Window("File Explorer");
     auto function_plotter = FunctionPlotter::Window();
+    auto text_editor = TextEditor::Window();
 
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
@@ -70,7 +72,8 @@ auto main() -> int {
         ImGui::NewFrame();
 
         // file_explorer.draw();
-        function_plotter.draw();
+        // function_plotter.draw();
+        text_editor.draw();
 
         ImGui::Render();
         int display_w;
