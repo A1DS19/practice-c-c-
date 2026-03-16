@@ -3,6 +3,7 @@
 #include "diff_viewer.hpp"
 #include "file_explorer.hpp"
 #include "function_plotter.hpp"
+#include "paint.hpp"
 #include "text_editor.hpp"
 
 #ifdef __APPLE__
@@ -69,37 +70,39 @@ auto main() -> int {
     ImVec4 clear_color = ImVec4(0.000f, 0.169f, 0.212f, 1.00f); // Solarized Dark base03 #002b36
 
     {
-    auto file_explorer = FileExplorer::Window("File Explorer");
-    auto function_plotter = FunctionPlotter::Window();
-    auto text_editor = TextEditor::Window();
-    auto diff_viewer = DiffViewer::Window();
+        auto file_explorer = FileExplorer::Window("File Explorer");
+        auto function_plotter = FunctionPlotter::Window();
+        auto text_editor = TextEditor::Window();
+        auto diff_viewer = DiffViewer::Window();
+        auto paint = Paint::Window();
 
-    while (!glfwWindowShouldClose(window)) {
-        glfwPollEvents();
-        if (glfwGetWindowAttrib(window, GLFW_ICONIFIED) != 0) {
-            ImGui_ImplGlfw_Sleep(10);
-            continue;
+        while (!glfwWindowShouldClose(window)) {
+            glfwPollEvents();
+            if (glfwGetWindowAttrib(window, GLFW_ICONIFIED) != 0) {
+                ImGui_ImplGlfw_Sleep(10);
+                continue;
+            }
+
+            ImGui_ImplOpenGL3_NewFrame();
+            ImGui_ImplGlfw_NewFrame();
+            ImGui::NewFrame();
+
+            // file_explorer.draw();
+            // function_plotter.draw();
+            // diff_viewer.draw();
+            paint.draw();
+
+            ImGui::Render();
+            int display_w;
+            int display_h;
+            glfwGetFramebufferSize(window, &display_w, &display_h);
+            glViewport(0, 0, display_w, display_h);
+            glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w,
+                         clear_color.z * clear_color.w, clear_color.w);
+            glClear(GL_COLOR_BUFFER_BIT);
+            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+            glfwSwapBuffers(window);
         }
-
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
-        // file_explorer.draw();
-        // function_plotter.draw();
-        diff_viewer.draw();
-
-        ImGui::Render();
-        int display_w;
-        int display_h;
-        glfwGetFramebufferSize(window, &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
-        glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w,
-                     clear_color.z * clear_color.w, clear_color.w);
-        glClear(GL_COLOR_BUFFER_BIT);
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        glfwSwapBuffers(window);
-    }
     } // destroy window objects before ImGui context
 
     ImGui_ImplOpenGL3_Shutdown();
